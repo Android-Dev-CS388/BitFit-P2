@@ -1,7 +1,9 @@
 package com.codepath.articlesearch
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -23,91 +25,97 @@ fun createJson() = Json {
 }
 
 private const val TAG = "MainActivity/"
-private const val SEARCH_API_KEY = BuildConfig.API_KEY
-private const val ARTICLE_SEARCH_URL =
-    "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=${SEARCH_API_KEY}"
+//private const val SEARCH_API_KEY = BuildConfig.API_KEY
+//private const val ARTICLE_SEARCH_URL =
+//    "https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=${SEARCH_API_KEY}"
 
 class MainActivity : AppCompatActivity() {
-    private val articles = mutableListOf<DisplayArticle>()
-    private lateinit var articlesRecyclerView: RecyclerView
+    private val foods = mutableListOf<DisplayFood>()
+    private lateinit var foodsRecyclerView: RecyclerView
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
-        articlesRecyclerView = findViewById(R.id.articles)
+        foodsRecyclerView = findViewById(R.id.foods)
         // TODO: Set up ArticleAdapter with articles
-        val articleAdapter = ArticleAdapter(this, articles)
-        articlesRecyclerView.adapter = articleAdapter
+        val foodAdapter = FoodAdapter(this, foods)
+        foodsRecyclerView.adapter = foodAdapter
 
         lifecycleScope.launch {
-            (application as ArticleApplication).db.articleDao().getAll().collect { databaseList ->
+            (application as FoodApplication).db.foodDao().getAll().collect { databaseList ->
                 databaseList.map { entity ->
-                    DisplayArticle(
-                        entity.headline,
-                        entity.articleAbstract,
-                        entity.byline,
-                        entity.mediaImageUrl
+                    DisplayFood(
+                        entity.food,
+                        entity.calories
                     )
                 }.also { mappedList ->
-                    articles.clear()
-                    articles.addAll(mappedList)
-                    articleAdapter.notifyDataSetChanged()
+                    foods.clear()
+                    foods.addAll(mappedList)
+                    foodAdapter.notifyDataSetChanged()
                 }
             }
         }
 
-        articlesRecyclerView.layoutManager = LinearLayoutManager(this).also {
+        foodsRecyclerView.layoutManager = LinearLayoutManager(this).also {
             val dividerItemDecoration = DividerItemDecoration(this, it.orientation)
-            articlesRecyclerView.addItemDecoration(dividerItemDecoration)
+            foodsRecyclerView.addItemDecoration(dividerItemDecoration)
         }
 
-        val client = AsyncHttpClient()
-        client.get(ARTICLE_SEARCH_URL, object : JsonHttpResponseHandler() {
-            override fun onFailure(
-                statusCode: Int,
-                headers: Headers?,
-                response: String?,
-                throwable: Throwable?
-            ) {
-                Log.e(TAG, "Failed to fetch articles: $statusCode")
-            }
 
-            override fun onSuccess(statusCode: Int, headers: Headers, json: JSON) {
-                Log.i(TAG, "Successfully fetched articles: $json")
-                try {
-                    // TODO: Create the parsedJSON
-
-                    // TODO: Do something with the returned json (contains article information)
-                    val parsedJson = createJson().decodeFromString(
-                        SearchNewsResponse.serializer(),
-                        json.jsonObject.toString()
-                    )
-                    // TODO: Save the articles and reload the screen
-                    parsedJson.response?.docs?.let { list ->
-                        lifecycleScope.launch(IO) {
-                            (application as ArticleApplication).db.articleDao().deleteAll()
-                            (application as ArticleApplication).db.articleDao().insertAll(list.map {
-                                ArticleEntity(
-                                    headline = it.headline?.main,
-                                    articleAbstract = it.abstract,
-                                    byline = it.byline?.original,
-                                    mediaImageUrl = it.mediaImageUrl
-                                )
-                            })
-                        }
-                    }
-
-                } catch (e: JSONException) {
-                    Log.e(TAG, "Exception: $e")
-                }
-            }
-
-        })
+        val button = findViewById<Button>(R.id.button)
+        button.setOnClickListener{
+            val intent = Intent(this, DetailActivity::class.java)
+//            intent.(FOOD_EXTRA, button,/)
+            this.startActivity(intent)
+        }
+//        val client = AsyncHttpClient()
+//        client.get(FOOD_SEARCH_URL, object : JsonHttpResponseHandler() {
+//            override fun onFailure(
+//                statusCode: Int,
+//                headers: Headers?,
+//                response: String?,
+//                throwable: Throwable?
+//            ) {
+//                Log.e(TAG, "Failed to fetch articles: $statusCode")
+//            }
+//
+//            override fun onSuccess(statusCode: Int, headers: Headers, json: JSON) {
+//                Log.i(TAG, "Successfully fetched articles: $json")
+//                try {
+//                    // TODO: Create the parsedJSON
+//
+//                    // TODO: Do something with the returned json (contains article information)
+//                    val parsedJson = createJson().decodeFromString(
+//                        SearchNewsResponse.serializer(),
+//                        json.jsonObject.toString()
+//                    )
+//                    // TODO: Save the articles and reload the screen
+//                    parsedJson.response?.docs?.let { list ->
+//                        lifecycleScope.launch(IO) {
+//                            (application as ArticleApplication).db.articleDao().deleteAll()
+//                            (application as ArticleApplication).db.articleDao().insertAll(list.map {
+//                                ArticleEntity(
+//                                    headline = it.headline?.main,
+//                                    articleAbstract = it.abstract,
+//                                    byline = it.byline?.original,
+//                                    mediaImageUrl = it.mediaImageUrl
+//                                )
+//                            })
+//                        }
+//                    }
+//
+//                } catch (e: JSONException) {
+//                    Log.e(TAG, "Exception: $e")
+//                }
+//            }
+//
+//        })
 
     }
 }
