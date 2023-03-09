@@ -18,6 +18,7 @@ class FoodAdapter(private val context: Context, private val foods: List<DisplayF
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item_food, parent, false)
+
         return ViewHolder(view)
     }
 
@@ -36,6 +37,7 @@ class FoodAdapter(private val context: Context, private val foods: List<DisplayF
         private val caloriesTextView = itemView.findViewById<TextView>(R.id.calories)
 
 
+
         init {
             itemView.setOnClickListener(this)
         }
@@ -51,9 +53,9 @@ class FoodAdapter(private val context: Context, private val foods: List<DisplayF
             val food = foods[absoluteAdapterPosition]
 
             // TODO: Navigate to Details screen and pass selected article
-            val intent = Intent(context, DetailActivity::class.java)
-            intent.putExtra(FOOD_EXTRA, food)
-            context.startActivity(intent)
+//            val intent = Intent(context, DetailActivity::class.java)
+//            intent.putExtra(FOOD_EXTRA, food)
+//            context.startActivity(intent)
         }
 
     }

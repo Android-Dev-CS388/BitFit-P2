@@ -1,8 +1,8 @@
-# Android Project 5 - BitFit
+# Android Project 6 - BitFit
 
 Submitted by: Tejkumar Patel
 
-Bitfit is a health metrics app that allows users to track Nutrition / Calories for foods
+BitFit is a health metrics app that allows users to track Nutrition / Calories for foods
 
 Time spent: 2 hours spent in total
 
@@ -10,18 +10,14 @@ Time spent: 2 hours spent in total
 
 The following **required** functionality is completed:
 
-- [x] **At least one health metric is tracked (based on user input)**
-    - Chosen metric(s): `Nutrition / Calories`
-- [x] **There is a "create entry" UI that prompts users to make their daily entry**
-- [x] **New entries are saved in a database and then updated in the RecyclerView**
-- [x] **On application restart, previously entered entries are preserved (i.e., are *persistent*)**
+- [x] **Use at least 2 Fragments**
+- [x] **Create a new dashboard fragment where users can see a summary of their entered data**
+- [x] **Use one of the Navigation UI Views (BottomNavigation, Drawer Layout, Top Bar) to move between the fragments**
 
 The following **optional** features are implemented:
 
-- [ ] **Create a UI for tracking averages and trends in metrics**
-- [ ] **Improve and customize the user interface through styling and coloring**
-- [ ] **Implement orientation responsivity**
-- [ ] **Add a daily photo feature**
+- [ ] **Add a more advanced UI (e.g: Graphing) for tracking trends in metrics**
+- [ ] **Implement daily notifications to prompt users to fill in their data**
 
 The following **additional** features are implemented:
 
@@ -31,11 +27,12 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
+
 GIF created with [](https://www.onlineconverter.com/video-to-gif) and screen recorded with Mac
 
 This is a Gif showing how users add new foods along with the calories and it will be saved to the sqlite database. You can also see that when you exit off the app and come back, it will have the previously inputted data saved.
 
-<img src="https://github.com/tpatel29/BitFit/blob/main/demo.gif" width="350" height="600"/>
+<img src="https://github.com/tpatel29/BitFit-P2/blob/main/demo.gif" width="350" height="600"/>
 
 ## Notes
 
