@@ -32,7 +32,7 @@ GIF created with [](https://www.onlineconverter.com/video-to-gif) and screen rec
 
 This is a Gif showing how users add new foods along with the calories and it will be saved to the sqlite database. You can also see that when you exit off the app and come back, it will have the previously inputted data saved.
 
-<img src="https://github.com/tpatel29/BitFit-P2/blob/main/demo.gif" width="300" height="700"/>
+<img src="https://github.com/tpatel29/BitFit-P2/blob/main/demo.gif" width="400" height="700"/>
 
 ## Notes
 
